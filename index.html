@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TinyToolkit</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css">
+    <style>
+        body {
+            background-color: #f4f4f4;
+        }
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            padding: 20px;
+            max-width: 400px;
+            margin: auto;
+        }
+        .app-card {
+            background: white;
+            border-radius: 15px;
+            text-align: center;
+            padding: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .app-card:hover {
+            transform: translateY(-5px);
+        }
+        .app-card img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <section class="section">
+        <div class="container has-text-centered">
+            <h1 class="title">📱 TinyToolkit</h1>
+            <p class="subtitle">A collection of useful tools I developed</p>
+        </div>
+    </section>
+    
+    <div class="app-grid">
+        <div class="app-card" onclick="location.href='rating_simulator.html'">
+            <img src="star_icon.png" alt="Rating Simulator">
+            <p>Rating Simulator</p>
+        </div>
+        
+        <!-- More tools can be added here -->
+    </div>
+</body>
+</html>
