@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work Hours Calculator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css">
+    <script>
+        function calculateWorkHours() {
+            const startDate = document.getElementById("start-date").value;
+            const startTime = document.getElementById("start-time").value;
+            const endDate = document.getElementById("end-date").value;
+            const endTime = document.getElementById("end-time").value;
+            const breakTime = parseFloat(document.getElementById("break-time").value) || 0;
+            
+            if (!startDate || !startTime || !endDate || !endTime) {
+                alert("Please select both start and end date & times.");
+                return;
+            }
+            
+            const start = new Date(startDate + " " + startTime);
+            const end = new Date(endDate + " " + endTime);
+            
+            if (end <= start) {
+                alert("End time must be later than start time.");
+                return;
+            }
+            
+            // 计算夏令时偏移量（以分钟为单位）
+            const startOffset = start.getTimezoneOffset();
+            const endOffset = end.getTimezoneOffset();
+            const timezoneAdjustment = (startOffset - endOffset) * 60 * 1000;
+            
+            let workHours = (end - start + timezoneAdjustment) / (1000 * 60 * 60) - breakTime;
+            workHours = Math.max(workHours, 0); // 避免负工时
+            
+            document.getElementById("result").textContent = `Total Work Hours: ${workHours.toFixed(2)} hrs`;
+        }
+        
+        function setDefaultDate() {
+            const today = new Date().toISOString().split("T")[0];
+            document.getElementById("start-date").value = today;
+            document.getElementById("end-date").value = today;
+        }
+    </script>
+</head>
+<body onload="setDefaultDate()">
+    <section class="section">
+        <div class="container" style="max-width: 400px; margin: auto;">
+            <h1 class="title has-text-centered">⏳ Work Hours Calculator</h1>
+            <div class="box">
+                <div class="field">
+                    <label class="label">Start Date & Time</label>
+                    <div class="control">
+                        <input class="input" type="date" id="start-date">
+                    </div>
+                    <div class="control">
+                        <input class="input" type="time" id="start-time">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">End Date & Time</label>
+                    <div class="control">
+                        <input class="input" type="date" id="end-date">
+                    </div>
+                    <div class="control">
+                        <input class="input" type="time" id="end-time">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Break Time (hrs)</label>
+                    <div class="control">
+                        <input class="input" type="number" id="break-time" placeholder="Optional" step="0.1">
+                    </div>
+                </div>
+                <div class="control has-text-centered">
+                    <button class="button is-primary" onclick="calculateWorkHours()">Calculate</button>
+                </div>
+            </div>
+            <p id="result" class="has-text-centered has-text-weight-bold"></p>
+        </div>
+    </section>
+</body>
+</html>
